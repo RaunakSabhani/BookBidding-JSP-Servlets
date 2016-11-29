@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>LoginExample</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>LoginPage.jsp</welcome-file>
+  </welcome-file-list>
+<servlet> 
+<servlet-name>ProfileServlet</servlet-name>   
+<servlet-class>Profile</servlet-class> 
+</servlet> 
+<servlet-mapping>
+<servlet-name>ProfileServlet</servlet-name>
+<url-pattern>/servlet/profile</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+<servlet-name>PriorLoginServlet</servlet-name>   
+<servlet-class>PriorLogin</servlet-class> 
+</servlet> 
+<servlet-mapping>
+<servlet-name>PriorLoginServlet</servlet-name>
+<url-pattern>/servlet/priorlogin</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+<servlet-name>GetMyPostsServlet</servlet-name>   
+<servlet-class>GetMyPosts</servlet-class> 
+</servlet> 
+<servlet-mapping>
+<servlet-name>GetMyPosts</servlet-name>
+<url-pattern>/servlet/getmyposts</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+<servlet-name>GetPost</servlet-name>   
+<servlet-class>GetPost</servlet-class> 
+</servlet> 
+<servlet-mapping>
+<servlet-name>GetPost</servlet-name>
+<url-pattern>/servlet/getpost</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+<servlet-name>Search</servlet-name>   
+<servlet-class>Search</servlet-class> 
+</servlet> 
+<servlet-mapping>
+<servlet-name>Search</servlet-name>
+<url-pattern>/servlet/search</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+<servlet-name>AddBid</servlet-name>   
+<servlet-class>AddBid</servlet-class> 
+</servlet> 
+<servlet-mapping>
+<servlet-name>AddBid</servlet-name>
+<url-pattern>/servlet/addbid</url-pattern>
+</servlet-mapping>
+
+<filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+</web-app>
