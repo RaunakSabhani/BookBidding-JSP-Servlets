@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,8 +39,10 @@ public class Search extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String bookName = (String) request.getAttribute("search");
-		String requestString = Constants.GETPOSTSBYNAMEAPI + bookName;
+		String bookName = (String) request.getParameter("search");
+		System.out.println("Bookname is: "+bookName);
+		String requestString = Constants.GETPOSTSBYNAMEAPI + URLEncoder.encode(bookName, "UTF-8");
+		System.out.println("Request String is: "+requestString);
 		ClientConfig config = new DefaultClientConfig();
 	    config.getClasses().add(JacksonJaxbJsonProvider.class);
 	    config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
@@ -59,6 +62,6 @@ public class Search extends HttpServlet {
 		//JSONObject jsonObj = new JSONObject(output);
 		System.out.println("Output is "+output);
 		request.setAttribute("output", output);
-		//request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/SearchedPosts.jsp").forward(request, response);
 	}
 }

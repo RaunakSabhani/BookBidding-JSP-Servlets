@@ -17,6 +17,12 @@
 			widgets : [ 'zebra' ]
 		});
 	});
+	$(function() {    
+	    $('#filter1').change(function() {
+	        $("#myDummyTable td.col3:contains('" + $(this).val() + "')").parent().show();
+	        $("#myDummyTable td.col3:not(:contains('" + $(this).val() + "'))").parent().hide();
+	    });
+	});
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
@@ -35,10 +41,11 @@
 </form>
 </c:when>
 </c:choose>
+	Bid Price Filter: <input type="text" id="filter1" />
 	<table id="myDummyTable" class="tablesorter" border="0" cellpadding="0" cellspacing="1">
 		<thead>
         <tr>
-          <th>USer Name</th>
+          <th>User Name</th>
           <th>Bid Date</th>      
           <th>Bid Price</th>
         </tr>
@@ -46,9 +53,9 @@
       	<tbody>
 		<c:forEach items="${listBids}" var="bid">
 			<tr>
-				<td><c:out value="${bid.username}" /></td>
+				<td class="col1"><c:out value="${bid.username}" /></td>
 				<td><c:out value="${bid.bidDate}" /></td>
-				<td><c:out value="${bid.bidPrice}" /></td>
+				<td class="col3"><c:out value="${bid.bidPrice}" /></td>
 			</tr>
 		</c:forEach>
 		</tbody>
