@@ -3,6 +3,11 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+//import javax.net.ssl.TrustManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +20,40 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 /**
  * Servlet implementation class Login
  */
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	 public static void disableCertificateValidation() {
+		    // Create a trust manager that does not validate certificate chains
+		    TrustManager[] trustAllCerts = new TrustManager[] { 
+		      new X509TrustManager() {
+		        public X509Certificate[] getAcceptedIssuers() { 
+		          return new X509Certificate[0]; 
+		        }
+		        public void checkClientTrusted(X509Certificate[] certs, String authType) {}
+		        public void checkServerTrusted(X509Certificate[] certs, String authType) {}
+		    }};
+
+		    // Ignore differences between given hostname and certificate hostname
+		    /*HostnameVerifier hv = new HostnameVerifier() {
+		      public boolean verify(String hostname, SSLSession session) { return true; }
+		    };*/
+
+		    // Install the all-trusting trust manager
+		    try {
+		      SSLContext sc = SSLContext.getInstance("SSL");
+		      sc.init(null, trustAllCerts, new SecureRandom());
+		      HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		      //HttpsURLConnection.setDefaultHostnameVerifier(hv);
+		    } catch (Exception e) {}
+	 }
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,6 +67,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		disableCertificateValidation();
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");

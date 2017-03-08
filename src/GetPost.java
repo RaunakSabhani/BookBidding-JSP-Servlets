@@ -40,6 +40,7 @@ public class GetPost extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Signin.disableCertificateValidation();
 		Long postId = Long.parseLong(request.getParameter("postid"));
 		//String password = request.getParameter("password");
 		
@@ -97,7 +98,6 @@ public class GetPost extends HttpServlet {
 			System.out.println("Output is "+listBids);
 			request.setAttribute("listBids", listBids);
 
-			//System.out.println("Date is: "+date);
-		request.getRequestDispatcher("/WEB-INF/SinglePost.jsp").forward(request, response);
+		request.getRequestDispatcher("SinglePost.jsp").forward(request, response);
 	}
 }

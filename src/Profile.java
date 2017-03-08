@@ -42,14 +42,13 @@ public class Profile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Signin.disableCertificateValidation();
 		try {
-			String username = (String) request.getSession().getAttribute("username");
-			String password = (String) request.getSession().getAttribute("password");
-			System.out.println("Username: " + username + " PAssword: " + password);
+			String userid = (String) request.getSession().getAttribute("userid");
 
 			Client client = Client.create();
 
-			String requestString = Constants.SIGNINAPI + username + "/" + password;
+			String requestString = Constants.GETPROFILEAPI + userid;
 			WebResource webResource = client.resource(requestString);
 
 			ClientResponse jsonResponse = webResource.accept("application/json").get(ClientResponse.class);
@@ -61,38 +60,46 @@ public class Profile extends HttpServlet {
 
 			JSONObject jsonObj = new JSONObject(output);
 			String name = jsonObj.getString("name");
-			username = jsonObj.getString("username");
+			System.out.println("Value on getting: "+name);
+			String username = jsonObj.getString("username");
 			String email = jsonObj.getString("email");
-			String birthDate = jsonObj.getString("birthDate");
 			String lastLoginDate = jsonObj.getString("lastLoginDate");
 			String lastLoginTime = jsonObj.getString("lastLoginTime");
+			String location = jsonObj.getString("location");
 
-			System.out.println("birthdate is: " + birthDate);
 
 			String gender = jsonObj.getString("gender");
-
-			String parsedBirthDate = birthDate.replaceAll("-", "/");
+			System.out.println("Gender is: "+gender);
 			System.out.println("Output from Server .... \n");
-			System.out.println(name + username + email + birthDate + gender);
 			request.setAttribute("name", name);
+			System.out.println("After setting .... \n" + request.getAttribute("name"));
 			request.setAttribute("username", username);
 			request.setAttribute("email", email);
-			request.setAttribute("birthDate", parsedBirthDate);
 			request.setAttribute("gender", gender);
 			request.setAttribute("lastLoginDate", lastLoginDate);
 			request.setAttribute("lastLoginTime", lastLoginTime);
+			request.setAttribute("location", location);
 			if (gender.equals("M")) {
 				request.setAttribute("gendertype", 1);
 
 			} else {
 				request.setAttribute("gendertype", 0);
 			}
-			request.getRequestDispatcher("/WEB-INF/ProfilePage.jsp").forward(request, response);
+			request.getRequestDispatcher("ProfilePage.jsp").forward(request, response);
 			//response.sendRedirect(request.getContextPath() + "/ProfilePage.jsp");
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request,response);
 	}
 }

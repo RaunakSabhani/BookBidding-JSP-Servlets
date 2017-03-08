@@ -31,8 +31,8 @@ public class AddBid extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//Initialize optional parameters
-
-		String price = "11.0";
+		Signin.disableCertificateValidation();
+		String price = request.getParameter("price");
 		String requestString = Constants.ADDBIDAPI;
 		Client client = Client.create();
 		WebResource webResource = client
@@ -40,10 +40,10 @@ public class AddBid extends HttpServlet {
 
 		System.out.println((String)request.getSession().getAttribute("username") + (String)request.getSession().getAttribute("password") + request.getParameter("postid") + price);
 		MultivaluedMap formData = new MultivaluedMapImpl();
-		formData.add("username", request.getSession().getAttribute("username"));
-		formData.add("password", request.getSession().getAttribute("password"));
+		formData.add("userid", request.getSession().getAttribute("userid"));
 		formData.add("postID", request.getParameter("postid"));
 		formData.add("bidPrice", price);
+		formData.add("secretKey", Constants.secretKey);
 		
 		ClientResponse jsonResponse = webResource
 		    .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
@@ -53,6 +53,7 @@ public class AddBid extends HttpServlet {
 		   throw new RuntimeException("Failed : HTTP error code : "
 			+ jsonResponse.getStatus());
 		}
-		request.getRequestDispatcher("/servlet/getpost?postid="+request.getParameter("postid")).forward(request, response);
+		response.sendRedirect("GetPost.jsp?postid="+request.getParameter("postid"));
+		//request.getRequestDispatcher("GetPost.jsp?postid="+request.getParameter("postid")).forward(request, response);
 	}
 }

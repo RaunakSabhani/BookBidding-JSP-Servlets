@@ -36,38 +36,27 @@ public class UpdateProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Signin.disableCertificateValidation();
 		System.out.println("In update Profile");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
-		String userName = request.getParameter("username");
-		String password = "yash";
-		String date = request.getParameter("date");
+		String username = request.getParameter("username");
 		String gender = request.getParameter("gender");
-		gender = "M";
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-		Date parsedDate = new Date();
-		try {
-			parsedDate = format.parse(date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.println(name + " " + email + " " + userName + " " + password + " " +parsedDate + " " + gender);
+		
 		Client client = Client.create();
 
 		String requestString = Constants.UPDATEAPI;
 		System.out.println("request string is: "+requestString);
 		WebResource webResource = client
 		   .resource(requestString);
-
+		System.out.println("Name is: "+name);
 		MultivaluedMap formData = new MultivaluedMapImpl();
-		formData.add("userName", userName);
-		formData.add("password", password);
+		formData.add("username", username);
+		formData.add("userid", request.getSession().getAttribute("userid"));
 		formData.add("name", name);
 		formData.add("email", email);
-		//formData.add("gender", gender);
-		formData.add("birthDate", date);
+		formData.add("gender", gender);
+		formData.add("secretKey", Constants.secretKey);
 		ClientResponse jsonResponse = webResource
 		    .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
 		    .post(ClientResponse.class, formData);
@@ -77,7 +66,13 @@ public class UpdateProfile extends HttpServlet {
 		   throw new RuntimeException("Failed : HTTP error code : "
 			+ jsonResponse.getStatus());
 		}
-		
+
+		request.getSession().setAttribute("name", name);
+		//response.getWriter().println("Success Data");
+		//response.getWriter().close();
+		//request.getRequestDispatcher("GetProfile.jsp").forward(request, response);
+		response.sendRedirect("GetProfile.jsp");
+		//request.getRequestDispatcher("/GetProfile.jsp").forward(request, response);
 	}
 
 }

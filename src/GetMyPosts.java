@@ -42,10 +42,9 @@ public class GetMyPosts extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = (String) request.getSession().getAttribute("username");
-		String password = (String) request.getSession().getAttribute("password");
-		
-		String requestString = Constants.GETMYPOSTSAPI + username + "/"+password;
+		Signin.disableCertificateValidation();
+		String userid = (String) request.getSession().getAttribute("userid");
+		String requestString = Constants.GETMYPOSTSAPI + userid;
 		ClientConfig config = new DefaultClientConfig();
 	    config.getClasses().add(JacksonJaxbJsonProvider.class);
 	    config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
@@ -62,11 +61,9 @@ public class GetMyPosts extends HttpServlet {
 		}
 		ArrayList<HashMap> output = jsonResponse.getEntity(new GenericType<ArrayList<HashMap>>(){});
 
-		//JSONObject jsonObj = new JSONObject(output);
 		System.out.println("Output is "+output);
 		request.setAttribute("output", output);
-		//request.getRequestDispatcher("HomePage.jsp").forward(request, response);
 		
-		request.getRequestDispatcher("/WEB-INF/Posts.jsp").forward(request, response);
+		request.getRequestDispatcher("Posts.jsp").forward(request, response);
 	}
 }

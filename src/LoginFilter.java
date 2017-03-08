@@ -19,11 +19,12 @@ public class LoginFilter implements Filter{
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    	Signin.disableCertificateValidation();
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
 
-        if (session == null || session.getAttribute("username") == null) {
+        if (session == null || session.getAttribute("userid") == null) {
         	request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
         } else {
         	if (request.getRequestURL().toString().contains("LoginPage.jsp")) {

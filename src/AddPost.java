@@ -31,11 +31,18 @@ public class AddPost extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//Initialize optional parameters
-		String authorName = "";
-		String publisherName = "";
+		Signin.disableCertificateValidation();
+		String authorName = request.getParameter("authorName");
+		String publisherName = request.getParameter("publisherName");
 		
-		authorName = request.getParameter("aname");
-		publisherName = request.getParameter("pname");
+		if (authorName == null)
+		{
+			authorName = "";
+		}
+		if (publisherName == null)
+		{
+			publisherName = "";
+		}
 
 		String requestString = Constants.ADDPOSTAPI;
 		Client client = Client.create();
@@ -43,12 +50,12 @@ public class AddPost extends HttpServlet {
 		   .resource(requestString);
 
 		MultivaluedMap formData = new MultivaluedMapImpl();
-		formData.add("username", request.getSession().getAttribute("username"));
-		formData.add("password", request.getSession().getAttribute("password"));
+		formData.add("userid", request.getSession().getAttribute("userid"));
 		formData.add("bookName", request.getParameter("title"));
 		formData.add("authorName", authorName);
 		formData.add("publisherName", publisherName);
 		formData.add("price", request.getParameter("price"));
+		formData.add("secretKey", Constants.secretKey);
 		
 		ClientResponse jsonResponse = webResource
 		    .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
@@ -59,5 +66,7 @@ public class AddPost extends HttpServlet {
 		   throw new RuntimeException("Failed : HTTP error code : "
 			+ jsonResponse.getStatus());
 		}
+		
+		response.sendRedirect("Home.jsp");
 	}
 }
