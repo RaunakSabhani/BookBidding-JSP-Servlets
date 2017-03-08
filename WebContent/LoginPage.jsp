@@ -17,22 +17,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	var password = document.getElementById("password")
-	var confirmPassword = document.getElementById("reenterpassword")
-	function validatePassword(){
-		  if(password.value != confirmPassword.value) {
-		    //confirmPassword.setCustomValidity("Passwords Don't Match");
-		  } else {
-			alert("Check successsful");
-		    //confirmPassword.setCustomValidity('');
-		  }
-	}
-	//password.onchange = validatePassword;
-	confirmPassword.onkeyup = validatePassword;
-});
-</script>
 </head>
 <body>
 
@@ -40,10 +24,6 @@ $(document).ready(function() {
 
 		<br>
 		<center>
-			<h1>
-				<b>Sorry</b>
-			</h1>
-			<h3>You need to sign in or register</h3>
 			<br>
 			<button class="btn btn-primary btn-lg" href="#signup"
 				data-toggle="modal" data-target=".bs-modal-sm">Sign
@@ -66,27 +46,20 @@ $(document).ready(function() {
 						<li class="active"><a href="#signin" data-toggle="tab">Sign
 								In</a></li>
 						<li class=""><a href="#signup" data-toggle="tab">Register</a></li>
-						<li class=""><a href="#why" data-toggle="tab">Why?</a></li>
 					</ul>
 				</div>
 				<div class="modal-body">
 					<div id="myTabContent" class="tab-content">
-						<div class="tab-pane fade in" id="why">
-							<p>We need this information so that you can receive access to
-								the site and its content. Rest assured your information will not
-								be sold, traded, or given to anyone.</p>
-
-						</div>
 						<div class="tab-pane fade active in" id="signin">
-							<form class="form-horizontal" action="Signin" method="Post">
+							<form class="form-horizontal" action="Signin" method="get">
 								<fieldset>
 									<!-- Sign In Form -->
 									<!-- Text input-->
 									<div class="control-group">
-										<label class="control-label" for="userid">UserName:</label>
+										<label class="control-label" for="userid">Username:</label>
 										<div class="controls">
 											<input required="" id="username" name="username" type="text"
-												class="form-control" placeholder="JoeSixpack"
+												class="form-control" placeholder="Username"
 												class="input-medium" required="">
 										</div>
 									</div>
@@ -105,7 +78,7 @@ $(document).ready(function() {
 									<div class="control-group">
 										<label class="control-label" for="signin"></label>
 										<div class="controls">
-											<button id="signin" name="signin" class="btn btn-success">Sign
+											<button id="signin" name="signin" class="btn btn-success center-block">Sign
 												In</button>
 										</div>
 									</div>
@@ -120,8 +93,8 @@ $(document).ready(function() {
 									<div class="control-group">
 										<label class="control-label" for="Name">Name:</label>
 										<div class="controls">
-											<input id="name" name="name" class="form-control" type="text"
-												class="input-large" required="">
+											<input id="name" name="name" class="form-control" placeholder="Name" 
+											type="text" class="input-large" required="">
 										</div>
 									</div>
 
@@ -129,16 +102,16 @@ $(document).ready(function() {
 									<div class="control-group">
 										<label class="control-label" for="Email">Email:</label>
 										<div class="controls">
-											<input id="email" name="email" class="form-control"
+											<input id="email" name="email" class="form-control" placeholder="Email"
 												type="text" class="input-large" required="">
 										</div>
 									</div>
 
 									<!-- Text input-->
 									<div class="control-group">
-										<label class="control-label" for="userid">UserName:</label>
+										<label class="control-label" for="userid">Username:</label>
 										<div class="controls">
-											<input id="username" name="username" class="form-control"
+											<input id="username" name="username" placeholder="Username" class="form-control"
 												type="text" class="input-large" required="">
 										</div>
 									</div>
@@ -147,29 +120,8 @@ $(document).ready(function() {
 									<div class="control-group">
 										<label class="control-label" for="password">Password:</label>
 										<div class="controls">
-											<input id="password" name="password" class="form-control"
+											<input id="password" name="password" class="form-control" placeholder="Password"
 												type="password" class="input-large" required=""> <em>1-8 Characters</em>
-										</div>
-									</div>
-
-									<!-- Text input-->
-									<div class="control-group">
-										<label class="control-label" for="reenterpassword">Re-Enter
-											Password:</label>
-										<div class="controls">
-											<input id="reenterpassword" class="form-control"
-												name="reenterpassword" type="password"
-												class="input-large" required="">
-										</div>
-									</div>
-
-									<!-- Date input-->
-									<div class="control-group">
-										<label class="control-label" for="date">Birth
-											Date:</label>
-										<div class="controls">
-											<input id="date" class="form-control" name="date" type="date"
-												class="input-large" required="">
 										</div>
 									</div>
 
@@ -177,7 +129,7 @@ $(document).ready(function() {
 									<br>
 									<div class="control-group">
 										<label class="control-label" for="gender">Gender:</label>
-										<div class="controls">
+										<div class="controls" style="margin-left:20px;">
 											<label class="radio inline" for="gender-0"> <input
 												type="radio" name="gender" id="gender-0" value="M"
 												checked="checked">Male
@@ -192,7 +144,7 @@ $(document).ready(function() {
 										<label class="control-label" for="confirmsignup"></label>
 										<div class="controls">
 											<button id="confirmsignup" name="confirmsignup"
-												class="btn btn-success">Sign Up</button>
+												class="btn btn-success center-block">Sign Up</button>
 										</div>
 									</div>
 								</fieldset>
